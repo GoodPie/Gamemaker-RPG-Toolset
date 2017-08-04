@@ -64,9 +64,11 @@ right = keyboard_check(ord("D")) || keyboard_check(vk_right);
 y_dir = -up + down;
 x_dir = -left + right;
 
-// Perform a quick collision check with solid objects
+// Determine how far in each direction we are moving
 mv_x = (x_dir * move_speed);
 mv_y = (y_dir * move_speed);
+
+// Ensure that we aren't colliding with a solid object before moving
 if (!place_meeting(x + mv_x, y + mv_y, obj_solid)) {
    // Move the player in the correct direction
     x += (x_dir * move_speed);

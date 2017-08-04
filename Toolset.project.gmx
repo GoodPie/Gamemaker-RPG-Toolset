@@ -14,6 +14,8 @@
   <objects name="objects">
     <object>objects\obj_player</object>
     <object>objects\obj_solid</object>
+    <object>objects\obj_chatbox</object>
+    <object>objects\obj_controller</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_testing</room>
