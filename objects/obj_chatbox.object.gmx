@@ -61,9 +61,11 @@ chat_items[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a
 chat_items[0] = ds_map_create();
 ds_map_add(chat_items[0], "text", "Hello, World!");
 ds_map_add(chat_items[0], "name", "John Doe");
+
 chat_items[1] = ds_map_create();
 ds_map_add(chat_items[1], "text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum.");
 ds_map_add(chat_items[1], "name", "John Doe");
+
 chat_items[2] = ds_map_create();
 ds_map_add(chat_items[2], "text", "Ah, nice to know fam squad");
 ds_map_add(chat_items[2], "name", "Franklin Jones");
@@ -134,7 +136,7 @@ border_color = c_gray;
 
 // How wide the textbox is relative to the window
 var perc_width = 0.7;
-var perc_height = 0.25;
+var perc_height = 0.2;
 
 // Calculate the width of the box
 box_width = perc_width * window_get_width();
