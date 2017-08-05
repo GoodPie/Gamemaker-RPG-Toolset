@@ -72,12 +72,16 @@ new_y = (y_dir * move_speed);
 in_bounds_y = (y + new_y &gt; 0) and (y + new_y &lt; room_height - 32);
 in_bounds_x = (x + new_x &gt; 0) and (x + new_x &lt; room_width - 32);
 
-if (!place_meeting(x + new_x, y, obj_solid) and in_bounds_x) {
-   x += (x_dir * move_speed);
-}
-
-if (!place_meeting(x, y + new_y, obj_solid) and in_bounds_y) {
-   y += (y_dir * move_speed);
+// Only allow the player to move if no busy conditions
+if (obj_controller.is_talking == false)
+{
+    if (!place_meeting(x + new_x, y, obj_solid) and in_bounds_x) {
+       x += (x_dir * move_speed);
+    }
+    
+    if (!place_meeting(x, y + new_y, obj_solid) and in_bounds_y) {
+       y += (y_dir * move_speed);
+    }
 }
 
 
