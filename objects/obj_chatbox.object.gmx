@@ -25,15 +25,39 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Initialize chatbox variables
+            <string>/// (DISABLED) Basic Chatbox initialization
 
-// Initialize text array to hold all the speech 
-/* Remove this comment to enable the basic 
-text[0] = "Hello, World!";
-text[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum."
+/*
+
+// Basic array chatbox items
+chat_items[0] = "Hello, World!";
+chat_items[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum."
+
 */
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// (ENABLED) Advanced chatbox initialization
 
 // Use advanced ds to represent chat items
+// Basic example using name and text
 chat_items[0] = ds_map_create();
 ds_map_add(chat_items[0], "text", "Hello, World!");
 ds_map_add(chat_items[0], "name", "John Doe");
@@ -43,6 +67,27 @@ ds_map_add(chat_items[1], "name", "John Doe");
 chat_items[2] = ds_map_create();
 ds_map_add(chat_items[2], "text", "Ah, nice to know fam squad");
 ds_map_add(chat_items[2], "name", "Franklin Jones");
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Initialize chatbox variables
 
 // Current index of chat
 chat_index = 0;
@@ -54,12 +99,7 @@ char_index = 0;
 chat_next = false;
 
 // Flag for typing out text
-is_typing = true;
 alarm_in_progress = false;
-
-// If using data structure in array, keep flag so we can delete it on end
-using_ds = false;
-
 </string>
           </argument>
         </arguments>
@@ -85,16 +125,16 @@ using_ds = false;
 // How fast the text (each character is drawn to the screen)
 type_speed = 2;
 
-// How wide the textbox is relative to the window
-var perc_width = 0.7;
-var perc_height = 0.25;
-
 // Padding inside the box
 padding = 5;
 
 // Textbox color
 box_color = c_black;
 border_color = c_gray;
+
+// How wide the textbox is relative to the window
+var perc_width = 0.7;
+var perc_height = 0.25;
 
 // Calculate the width of the box
 box_width = perc_width * window_get_width();
@@ -121,7 +161,7 @@ box_height = perc_height * window_get_height();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Enabled when using ds for chatbox
+            <string>/// (ENABLED) Enabled when using ds for chatbox
 
 for (var i = 0; i &lt; array_length_1d(chat_items); i++)
 {
@@ -150,6 +190,7 @@ for (var i = 0; i &lt; array_length_1d(chat_items); i++)
           <argument>
             <kind>1</kind>
             <string>/// Increment the character to look like it's typing
+// Called in step
 
 char_index += 1;
 alarm_in_progress = false;
@@ -175,46 +216,38 @@ alarm_in_progress = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// DISABLED
-// Check for keyboard presses and handle events
+            <string>/// (DISABLED) Get text item from array
+
 /*
-var can_close = false;
-var next_page = false;
 
-// Check if the character exceeds the length of the string
-if (char_index &gt;= string_length(text[chat_index])) {
-    
-    // Ensure the we aren't going out of array bounds
-    if (chat_index &gt;= array_length_1d(text) - 1) {
-       // User now free to close chat
-       can_close = true;       
-    } else {
-       // User can go to next text
-       next_page = true;
-    }
+var text_to_show = chat_items[chat_index];
 
-}
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// (ENABLED) Get text item from data structure
 
-// Handle next action
-if (keyboard_check_pressed(ord("E"))) {
+var chat_item = chat_items[chat_index];
+var text_to_show = chat_item[? "text"];
 
-    // Show the full text if not at the end
-    char_index = string_length(text[chat_index]);
-    
-    // Close the chat box if at the end
-    if (can_close) {
-       instance_destroy();
-    } else if (next_page) {
-        chat_index += 1;
-        char_index = 0;
-    }
-}
-
-// Alarm to go to next character to make it look like it's tpying
-if (!alarm_in_progress) {
-   alarm[0] = type_speed;
-   alarm_in_progress = true;
-}*/
 </string>
           </argument>
         </arguments>
@@ -239,11 +272,6 @@ if (!alarm_in_progress) {
 
 var can_close = false;
 var next_page = false;
-
-// Extract whatever we need for the chat box
-var chat_item = chat_items[chat_index];
-var text_to_show = chat_item[? "text"];
-var name_to_show = chat_item[? "name"];
 
 // Check if the character exceeds the length of the string
 if (char_index &gt;= string_length(text_to_show)) {
