@@ -28,9 +28,21 @@
             <string>/// Initialize chatbox variables
 
 // Initialize text array to hold all the speech 
-// A data structure should be created for more advanced dialog rather than a simple string
+/* Remove this comment to enable the basic 
 text[0] = "Hello, World!";
 text[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum."
+*/
+
+// Use advanced ds to represent chat items
+chat_items[0] = ds_map_create();
+ds_map_add(chat_items[0], "text", "Hello, World!");
+ds_map_add(chat_items[0], "name", "John Doe");
+chat_items[1] = ds_map_create();
+ds_map_add(chat_items[1], "text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum.");
+ds_map_add(chat_items[1], "name", "John Doe");
+chat_items[2] = ds_map_create();
+ds_map_add(chat_items[2], "text", "Ah, nice to know fam squad");
+ds_map_add(chat_items[2], "name", "Franklin Jones");
 
 // Current index of chat
 chat_index = 0;
@@ -92,6 +104,34 @@ box_height = perc_height * window_get_height();
         </arguments>
       </action>
     </event>
+    <event eventtype="1" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Enabled when using ds for chatbox
+
+for (var i = 0; i &lt; array_length_1d(chat_items); i++)
+{
+    ds_map_destroy(chat_items[i]);
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="2" enumb="0">
       <action>
         <libid>1</libid>
@@ -135,8 +175,9 @@ alarm_in_progress = false;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Check for keyboard presses and handle events
-
+            <string>/// DISABLED
+// Check for keyboard presses and handle events
+/*
 var can_close = false;
 var next_page = false;
 
@@ -159,6 +200,70 @@ if (keyboard_check_pressed(ord("E"))) {
 
     // Show the full text if not at the end
     char_index = string_length(text[chat_index]);
+    
+    // Close the chat box if at the end
+    if (can_close) {
+       instance_destroy();
+    } else if (next_page) {
+        chat_index += 1;
+        char_index = 0;
+    }
+}
+
+// Alarm to go to next character to make it look like it's tpying
+if (!alarm_in_progress) {
+   alarm[0] = type_speed;
+   alarm_in_progress = true;
+}*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Check for keyboard presses and handle events
+
+var can_close = false;
+var next_page = false;
+
+// Extract whatever we need for the chat box
+var chat_item = chat_items[chat_index];
+var text_to_show = chat_item[? "text"];
+var name_to_show = chat_item[? "name"];
+
+// Check if the character exceeds the length of the string
+if (char_index &gt;= string_length(text_to_show)) {
+    
+    // Ensure the we aren't going out of array bounds
+    if (chat_index &gt;= array_length_1d(chat_items) - 1) {
+       // User now free to close chat
+       can_close = true;       
+    } else {
+       // User can go to next text
+       next_page = true;
+    }
+
+}
+
+// Handle next action
+if (keyboard_check_pressed(ord("E"))) {
+
+    // Show the full text if not at the end
+    char_index = string_length(text_to_show);
     
     // Close the chat box if at the end
     if (can_close) {
@@ -238,8 +343,11 @@ draw_rectangle(top_left_x, top_left_y, bottom_right_x, bottom_right_y, false);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Draw the text to the chatbox
+            <string>/// (DISABLED)
+// Types the text of a basic array
+// Remove comment tags to enable
 
+/*
 // Determine the boundaries of the text
 var top_left_x = (window_get_width() / 2) - (box_width / 2) + (padding * 2);
 var top_left_y = window_get_height() - box_height  + (padding * 2);
@@ -254,6 +362,66 @@ for (var i = 1; i &lt;= char_index; i++) {
 // Draw the text to the screen
 draw_set_color(c_white);
 draw_text_ext(top_left_x, top_left_y, current_text, 14, max_width);
+*/
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>
+/* Assume we have a map that looks something like 
+
+{ name: String, text: String }
+
+This is just a basic template and obviously more can be added (such as a sprite)
+Modify it to suit your needs
+*/
+
+// Extract required variables from ds
+var chat_item = chat_items[chat_index];
+var text_to_show = chat_item[? "text"];
+var name_to_show = chat_item[? "name"];
+
+
+// Determine the boundaries of the text
+var top_left_x = (window_get_width() / 2) - (box_width / 2) + (padding * 2);
+var top_left_y = window_get_height() - box_height  + (padding * 2);
+var max_width = box_width - (2 * padding);
+
+// Positions for each element
+var name_pos = top_left_y;
+var text_pos = top_left_y + 25;
+
+// Draw the name in place
+draw_set_color(c_yellow);
+draw_text(top_left_x, name_pos, name_to_show);
+
+// Draw the chat item
+var current_text = "";
+for (var i = 1; i &lt;= char_index; i++) {
+    current_text += string_char_at(text_to_show, i);
+}
+
+// Draw the text to the screen
+draw_set_color(c_white);
+draw_text_ext(top_left_x, text_pos, current_text, 14, max_width);
+
+
 </string>
           </argument>
         </arguments>
