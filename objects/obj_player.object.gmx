@@ -68,13 +68,14 @@ x_dir = -left + right;
 mv_x = (x_dir * move_speed);
 mv_y = (y_dir * move_speed);
 
-// Ensure that we aren't colliding with a solid object before moving
-if (!place_meeting(x + mv_x, y + mv_y, obj_solid)) {
-   // Move the player in the correct direction
-    x += (x_dir * move_speed);
-    y += (y_dir * move_speed);
+// Split the movement up so that the player can move in the appropriate direction
+if (!place_meeting(x + mv_x, y, obj_solid)) {
+   x += (x_dir * move_speed);
 }
 
+if (!place_meeting(x, y + mv_y, obj_solid)) {
+   y += (y_dir * move_speed);
+}
 
 
 </string>
