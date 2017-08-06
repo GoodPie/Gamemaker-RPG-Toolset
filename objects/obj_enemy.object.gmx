@@ -47,6 +47,10 @@ cool_down = 20;
 
 // Radius to detect player
 detect_radius = 128;
+
+// Default wander directions
+wander_x_dir = irandom_range(-1, 1);
+wander_y_dir = irandom_range(-1, 1);
 </string>
           </argument>
         </arguments>
@@ -146,33 +150,31 @@ if (distance_to_object(obj_player) &lt; detect_radius) {
             <kind>1</kind>
             <string>/// Perform action based on the current state
 
+var needs_to_move = false;
+
 if (current_state == states.WANDERING) {
-    var x_dir = irandom_range(-1, 1);
-    var y_dir = irandom_range(-1, 1);
-    
-    var new_x = x + (move_speed * x_dir);
-    var new_y = y + (move_speed * y_dir);
-   
-    in_bounds_y = (y + new_y &gt; 0) and (y + new_y &lt; room_height - 32);
-    in_bounds_x = (x + new_x &gt; 0) and (x + new_x &lt; room_width - 32);
-    
-    // Only allow the player to move if no busy conditions
-    if (obj_controller.is_busy == false)
-    {
-        if (!place_meeting(x + new_x, y, obj_solid) and in_bounds_x) {
-           x += (x_dir * move_speed);
-        }
-        
-        if (!place_meeting(x, y + new_y, obj_solid) and in_bounds_y) {
-           y += (y_dir * move_speed);
-        }
+
+    // Random chance of changing directions
+    var dir_change_chance = random_range(1, 15);
+    if (dir_change_chance &gt;= 15.0) {
+        wander_x_dir = irandom_range(-1, 1);
+        wander_y_dir = irandom_range(-1, 1);
     }
+
+    // Choose a random direction
+    var dir_x = wander_x_dir;
+    var dir_y = wander_y_dir;
+    
+    // Set moveflag to true
+    needs_to_move = true;
+    
 } else if (current_state == states.CHASING) {
 
     // Determine distance to player
     var dist_x = obj_player.x - x;
     var dist_y = obj_player.y - y;
     
+    // Determine which direciton to move the player
     var dir_x = 0;
     if (dist_x &lt; 0) {
        dir_x = -1;
@@ -187,27 +189,37 @@ if (current_state == states.WANDERING) {
        dir_y = 1;
     }
     
-    // Check for collisions
+    // Set move flag to true
+    needs_to_move = true;
+    
+} else if (current_state = states.ATTACK_COOLDOWN) {
+    // Enemy is on cooldown so perform no action until alarm finishes
+    if (!alarm[0]) {
+        alarm[0] = cool_down;
+    }
+}
+
+if (needs_to_move) {
+
+    // Determine where the enemy will end up
     var new_x = x + (move_speed * dir_x);
     var new_y = y + (move_speed * dir_y);
-    
-    in_bounds_y = (y + new_y &gt; 0) and (y + new_y &lt; room_height - 32);
-    in_bounds_x = (x + new_x &gt; 0) and (x + new_x &lt; room_width - 32);
+   
+    // Check if the enemy is within the room boundaries
+    var in_bounds_x = (new_x &gt; 0) and (new_x &lt; room_width - SPRITE_SIZE);
+    var in_bounds_y = (new_y &gt; 0) and (new_y &lt; room_height - SPRITE_SIZE);
     
     // Only allow the player to move if no busy conditions
     if (obj_controller.is_busy == false)
     {
-        if (!place_meeting(x + new_x, y, obj_solid) and in_bounds_x) {
-           x += (move_speed * dir_x);
+        // Ensure that there are no collisions between solid objects
+        if (!place_meeting(new_x, y, obj_solid) and in_bounds_x) {
+           x = new_x;
         }
         
-        if (!place_meeting(x, y + new_y, obj_solid) and in_bounds_y) {
-           y += (move_speed * dir_y);
+        if (!place_meeting(x, new_y, obj_solid) and in_bounds_y) {
+           y = new_y;
         }
-    }
-} else if (current_state = states.ATTACK_COOLDOWN) {
-    if (!alarm[0]) {
-        alarm[0] = cool_down;
     }
 }
 </string>

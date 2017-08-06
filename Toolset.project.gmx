@@ -23,6 +23,9 @@
   <rooms name="rooms">
     <room>rooms\rm_testing</room>
   </rooms>
+  <constants number="1">
+    <constant name="SPRITE_SIZE">32</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>

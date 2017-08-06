@@ -65,22 +65,22 @@ y_dir = -up + down;
 x_dir = -left + right;
 
 // Determine how far in each direction we are moving
-new_x = (x_dir * move_speed);
-new_y = (y_dir * move_speed);
+new_x = x + (x_dir * move_speed);
+new_y = y + (y_dir * move_speed);
 
 // Decide whether the player can move
-in_bounds_y = (y + new_y &gt; 0) and (y + new_y &lt; room_height - 32);
-in_bounds_x = (x + new_x &gt; 0) and (x + new_x &lt; room_width - 32);
+in_bounds_y = (new_y &gt; 0) and (new_y &lt; room_height - SPRITE_SIZE);
+in_bounds_x = (new_x &gt; 0) and (new_x &lt; room_width - SPRITE_SIZE);
 
 // Only allow the player to move if no busy conditions
 if (obj_controller.is_busy == false)
 {
-    if (!place_meeting(x + new_x, y, obj_solid) and in_bounds_x) {
-       x += (x_dir * move_speed);
+    if (!place_meeting(new_x, y, obj_solid) and in_bounds_x) {
+       x = new_x;
     }
     
-    if (!place_meeting(x, y + new_y, obj_solid) and in_bounds_y) {
-       y += (y_dir * move_speed);
+    if (!place_meeting(x, new_y, obj_solid) and in_bounds_y) {
+       y = new_y;
     }
 }
 
