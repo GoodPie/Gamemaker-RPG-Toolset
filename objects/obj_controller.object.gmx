@@ -27,7 +27,7 @@
             <kind>1</kind>
             <string>/// Control the main flow of the game
 
-is_talking = false;
+is_busy = false;
 is_paused = false;
 
 </string>
