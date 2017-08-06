@@ -9,6 +9,7 @@
     <sprite>sprites\spr_player</sprite>
     <sprite>sprites\spr_solid</sprite>
     <sprite>sprites\spr_controller</sprite>
+    <sprite>sprites\spr_enemy</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -17,10 +18,14 @@
     <object>objects\obj_solid</object>
     <object>objects\obj_chatbox</object>
     <object>objects\obj_controller</object>
+    <object>objects\obj_enemy</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_testing</room>
   </rooms>
+  <constants number="1">
+    <constant name="SPRITE_SIZE">32</constant>
+  </constants>
   <help>
     <rtf>help.rtf</rtf>
   </help>
