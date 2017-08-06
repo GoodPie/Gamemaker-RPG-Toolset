@@ -40,7 +40,7 @@ enum states {
 current_state = states.IDLE;
 
 // How fast the enemy can move
-move_speed = 6;
+move_speed = 4;
 
 // How long to wait between attacks
 cool_down = 20;
@@ -156,7 +156,7 @@ if (current_state == states.WANDERING) {
 
     // Random chance of changing directions
     var dir_change_chance = random_range(1, 15);
-    if (dir_change_chance &gt;= 15.0) {
+    if (dir_change_chance &gt;= 14.0) {
         wander_x_dir = irandom_range(-1, 1);
         wander_y_dir = irandom_range(-1, 1);
     }
@@ -192,7 +192,7 @@ if (current_state == states.WANDERING) {
     // Set move flag to true
     needs_to_move = true;
     
-} else if (current_state = states.ATTACK_COOLDOWN) {
+} else if (current_state == states.ATTACK_COOLDOWN) {
     // Enemy is on cooldown so perform no action until alarm finishes
     if (!alarm[0]) {
         alarm[0] = cool_down;
@@ -219,6 +219,11 @@ if (needs_to_move) {
         
         if (!place_meeting(x, new_y, obj_solid) and in_bounds_y) {
            y = new_y;
+        }
+        
+        // Check for collision with player (we want the enemy to be on top of the player)
+        if (place_meeting(x, y, obj_player)) {
+           current_state = states.ATTACK_COOLDOWN;
         }
     }
 }

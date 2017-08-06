@@ -55,26 +55,27 @@ move_speed = 8; // How fast the player will move
 // Define movement input events
 // Each variable will either be true or false depending on what
 // key is pressed
-up = keyboard_check(ord("W")) || keyboard_check(vk_up);
-down = keyboard_check(ord("S")) || keyboard_check(vk_down);
-left = keyboard_check(ord("A")) || keyboard_check(vk_left);
-right = keyboard_check(ord("D")) || keyboard_check(vk_right);
+var up = keyboard_check(ord("W")) || keyboard_check(vk_up);
+var down = keyboard_check(ord("S")) || keyboard_check(vk_down);
+var left = keyboard_check(ord("A")) || keyboard_check(vk_left);
+var right = keyboard_check(ord("D")) || keyboard_check(vk_right);
 
 // Determine the direction the player is facing
-y_dir = -up + down;
-x_dir = -left + right;
+var y_dir = -up + down;
+var x_dir = -left + right;
 
-// Determine how far in each direction we are moving
-new_x = x + (x_dir * move_speed);
-new_y = y + (y_dir * move_speed);
+// Use predicted positions for collision checking
+var new_x = x + (x_dir * move_speed);
+var new_y = y + (y_dir * move_speed);
 
-// Decide whether the player can move
-in_bounds_y = (new_y &gt; 0) and (new_y &lt; room_height - SPRITE_SIZE);
-in_bounds_x = (new_x &gt; 0) and (new_x &lt; room_width - SPRITE_SIZE);
+// Check if player is within room boundaries
+var in_bounds_y = (new_y &gt; 0) and (new_y &lt; room_height - SPRITE_SIZE);
+var in_bounds_x = (new_x &gt; 0) and (new_x &lt; room_width - SPRITE_SIZE);
 
 // Only allow the player to move if no busy conditions
 if (obj_controller.is_busy == false)
 {
+    // Ensure there are no collisions between walls or solid objects
     if (!place_meeting(new_x, y, obj_solid) and in_bounds_x) {
        x = new_x;
     }
