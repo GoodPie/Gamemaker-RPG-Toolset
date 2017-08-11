@@ -10,6 +10,8 @@
     <sprite>sprites\spr_solid</sprite>
     <sprite>sprites\spr_controller</sprite>
     <sprite>sprites\spr_enemy</sprite>
+    <sprite>sprites\spr_npc</sprite>
+    <sprite>sprites\spr_chat_trigger</sprite>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
@@ -19,6 +21,8 @@
     <object>objects\obj_chatbox</object>
     <object>objects\obj_controller</object>
     <object>objects\obj_enemy</object>
+    <object>objects\obj_npc</object>
+    <object>objects\obj_chat_trigger</object>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_testing</room>
