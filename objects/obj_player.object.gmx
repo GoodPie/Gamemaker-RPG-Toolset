@@ -32,6 +32,30 @@ move_speed = 8; // How fast the player will move
           </argument>
         </arguments>
       </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Player stats
+
+cur_health = 10;
+max_health = 10;
+</string>
+          </argument>
+        </arguments>
+      </action>
     </event>
     <event eventtype="3" enumb="0">
       <action>
@@ -86,6 +110,71 @@ if (obj_controller.is_busy == false)
 }
 
 
+</string>
+          </argument>
+        </arguments>
+      </action>
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Reset game if player is below 0 health
+
+if (cur_health &lt;= 0) {
+   room_restart();
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="64">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>/// Draw the health bar
+
+var healthbar_top_x = 10;
+var healthbar_top_y = 10;
+var healthbar_bot_x = window_get_width() * 0.3; // Use 20% width
+var healthbar_bot_y = 40; // 20px tall healthbar
+
+// Determine the healthbar percentage (0 - 100)
+var health_perc = (cur_health / max_health) * 100;
+
+// Draw healthbar using function with too many parameters 
+draw_healthbar(
+    healthbar_top_x, healthbar_top_y,
+    healthbar_bot_x, healthbar_bot_y, 
+    health_perc, 
+    c_black, c_red, c_green, 0,
+    true, true
+);
 </string>
           </argument>
         </arguments>
