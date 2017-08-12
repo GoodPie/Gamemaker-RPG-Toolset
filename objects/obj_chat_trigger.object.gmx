@@ -2,7 +2,7 @@
 <object>
   <spriteName>spr_chat_trigger</spriteName>
   <solid>0</solid>
-  <visible>-1</visible>
+  <visible>0</visible>
   <depth>0</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
@@ -27,23 +27,20 @@
             <kind>1</kind>
             <string>/// Initialize the chatbox
 
-if (obj_controller.is_busy) {
-   return false;
-}
-
-
-if (keyboard_check_pressed(ord("E"))) {
-
-   with (instance_create(0, 0, obj_chatbox)) {
-        // Set the chat
-        chat_items[0] = ds_map_create();
-        ds_map_add(chat_items[0], "text", "Hello, World!");
-        ds_map_add(chat_items[0], "name", "Test NPC");
-        
-        chat_items[1] = ds_map_create();
-        ds_map_add(chat_items[1], "text", ":^)");
-        ds_map_add(chat_items[1], "name", "Test NPC");
-   }
+if (obj_player.can_interact)
+{
+    if (keyboard_check_pressed(ord("E"))) {
+       with (instance_create(0, 0, obj_chatbox)) {
+            // Set the chat
+            chat_items[0] = ds_map_create();
+            ds_map_add(chat_items[0], "name", "Test NPC");
+            ds_map_add(chat_items[0], "text", "This is a test");
+            
+            chat_items[1] = ds_map_create();
+            ds_map_add(chat_items[1], "name", "Test NPC");
+            ds_map_add(chat_items[1], "text", ":^)");
+       }
+    }
 }
 </string>
           </argument>

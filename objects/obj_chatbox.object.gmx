@@ -87,6 +87,9 @@ ds_map_add(chat_items[0], "name", "John Doe");*/
 // Enable is talking on begin chatting
 obj_controller.is_busy = true;
 
+// Ensure that the player can't open several chat boxes whilst still enabling movement
+obj_player.can_interact = false;
+
 // Current index of chat
 chat_index = 0;
 
@@ -333,14 +336,14 @@ if (char_index &gt;= string_length(text_to_show)) {
 // Handle next action
 if (keyboard_check_pressed(ord("E"))) {
 
-    show_debug_message(chat_index);
-
     // Show the full text if not at the end
     char_index = string_length(text_to_show);
     
     // Close the chat box if at the end
     if (can_close) {
        obj_controller.is_busy = false;
+       // Reset player interact status
+       obj_player.alarm[0] = 5;
        instance_destroy();
     } else if (next_page) {
         chat_index += 1;
