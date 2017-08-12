@@ -6,23 +6,35 @@
   <NewExtensions/>
   <sounds name="sound"/>
   <sprites name="sprites">
-    <sprite>sprites\spr_player</sprite>
-    <sprite>sprites\spr_solid</sprite>
     <sprite>sprites\spr_controller</sprite>
-    <sprite>sprites\spr_enemy</sprite>
-    <sprite>sprites\spr_npc</sprite>
     <sprite>sprites\spr_chat_trigger</sprite>
+    <sprite>sprites\spr_player</sprite>
+    <sprites name="Entities">
+      <sprite>sprites\spr_npc</sprite>
+      <sprite>sprites\spr_enemy</sprite>
+    </sprites>
+    <sprites name="Environment">
+      <sprite>sprites\spr_solid</sprite>
+    </sprites>
   </sprites>
   <backgrounds name="background"/>
   <paths name="paths"/>
   <objects name="objects">
-    <object>objects\obj_player</object>
-    <object>objects\obj_solid</object>
-    <object>objects\obj_chatbox</object>
-    <object>objects\obj_controller</object>
-    <object>objects\obj_enemy</object>
-    <object>objects\obj_npc</object>
-    <object>objects\obj_chat_trigger</object>
+    <objects name="Entities">
+      <object>objects\obj_player</object>
+      <object>objects\obj_enemy</object>
+      <object>objects\obj_npc</object>
+      <objects name="Helpers">
+        <object>objects\obj_chat_trigger</object>
+      </objects>
+    </objects>
+    <objects name="Environment">
+      <object>objects\obj_solid</object>
+    </objects>
+    <objects name="Other">
+      <object>objects\obj_controller</object>
+      <object>objects\obj_chatbox</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_testing</room>
