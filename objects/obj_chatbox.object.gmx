@@ -58,17 +58,10 @@ chat_items[1] = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis a
 
 // Use advanced ds to represent chat items
 // Basic example using name and text
-chat_items[0] = ds_map_create();
+/*chat_items[0] = ds_map_create();
 ds_map_add(chat_items[0], "text", "Hello, World!");
-ds_map_add(chat_items[0], "name", "John Doe");
+ds_map_add(chat_items[0], "name", "John Doe");*/
 
-chat_items[1] = ds_map_create();
-ds_map_add(chat_items[1], "text", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac urna pellentesque, suscipit lorem vitae, vulputate augue. Cras mattis vestibulum.");
-ds_map_add(chat_items[1], "name", "John Doe");
-
-chat_items[2] = ds_map_create();
-ds_map_add(chat_items[2], "text", "Ah, nice to know fam squad");
-ds_map_add(chat_items[2], "name", "Franklin Jones");
 </string>
           </argument>
         </arguments>
@@ -93,6 +86,9 @@ ds_map_add(chat_items[2], "name", "Franklin Jones");
 
 // Enable is talking on begin chatting
 obj_controller.is_busy = true;
+
+// Ensure that the player can't open several chat boxes whilst still enabling movement
+obj_player.can_interact = false;
 
 // Current index of chat
 chat_index = 0;
@@ -272,7 +268,6 @@ var text_to_show = chat_items[chat_index];
           <argument>
             <kind>1</kind>
             <string>/// (ENABLED) Get text item from data structure
-
 var chat_item = chat_items[chat_index];
 var text_to_show = chat_item[? "text"];
 
@@ -347,6 +342,8 @@ if (keyboard_check_pressed(ord("E"))) {
     // Close the chat box if at the end
     if (can_close) {
        obj_controller.is_busy = false;
+       // Reset player interact status
+       obj_player.alarm[0] = 5;
        instance_destroy();
     } else if (next_page) {
         chat_index += 1;
@@ -463,7 +460,7 @@ draw_text_ext(top_left_x, top_left_y, current_text, 14, max_width);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>/// Draw advance chat 
 /* Assume we have a map that looks something like 
 
 { name: String, text: String }
