@@ -34,6 +34,7 @@
     <objects name="Other">
       <object>objects\obj_controller</object>
       <object>objects\obj_chatbox</object>
+      <object>objects\obj_damage_popoff</object>
     </objects>
   </objects>
   <rooms name="rooms">
